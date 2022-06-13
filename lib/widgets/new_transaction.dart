@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -20,19 +19,11 @@ class _NewTransactionState extends State<NewTransaction> {
 
   //var enteredAmount = 0;
   void _submitData() {
-    final enteredTitle = _titleController.text;
-    final enteredAmount = double.parse(_amountController.text);
     if (_amountController.text.isEmpty) {
       return;
     }
-
-    FirebaseFirestore.instance.collection('expenses').add({
-      'title': _titleController.text,
-      'amount': double.parse(_amountController.text),
-      'date': DateFormat.yMd().format(_selectedDate!),
-      'id': DateTime.now().toString()
-    });
-    Navigator.of(context).pop();
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.parse(_amountController.text);
     //enteredTitle = _titleController.text;
     //final enteredAmount = double.parse(_amountController.text);
 
@@ -45,6 +36,7 @@ class _NewTransactionState extends State<NewTransaction> {
       enteredAmount,
       _selectedDate,
     );
+    Navigator.of(context).pop();
   }
 
   void _datePicker() {
@@ -62,8 +54,6 @@ class _NewTransactionState extends State<NewTransaction> {
       });
     });
   }
-
-  void _addTransaction() {}
 
   @override
   Widget build(BuildContext context) {

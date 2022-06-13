@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:personal_expenses/widgets/chart.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
-import './models/transaction.dart' as t;
+import './models/transaction.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -48,7 +45,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<t.Transaction> _userTransactions = [
+  final List<Transaction> _userTransactions = [
     /*Transaction(
       id: 't1',
       title: 'New Shoes',
@@ -63,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ),*/
   ];
 
-  List<t.Transaction> get _recentTransactions {
+  List<Transaction> get _recentTransactions {
     return _userTransactions.where((tx) {
       return tx.date.isAfter(
         DateTime.now().subtract(
@@ -75,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addNewTransaction(
       String txTitle, double txAmount, DateTime chosenDate) {
-    final newTx = t.Transaction(
+    final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
       date: chosenDate,
@@ -84,7 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       _userTransactions.add(newTx);
-      Navigator.pop(context);
     });
   }
 
